@@ -1,0 +1,7 @@
+erl_crash.dump
+.DS_Store
+node_modules/
+bun.lock
+.env
+*.log
+.claude_oauth

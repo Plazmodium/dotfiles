@@ -1,0 +1,36 @@
+# Claude Code
+CLAUDE.md
+.claude/
+
+# Neovim
+*.swp
+*.swo
+*~
+.netrwhist
+spell/
+
+# Plugin state (optional - uncomment if you don't want to track)
+# lazy-lock.json
+
+# Mason installed tools
+mason/
+
+# Local configuration
+.luarc.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Session files
+Session.vim
+*.session
+
+# Undo files
+undodir/
+
+# Backup files
+backup/
+
+# Log files
+*.log

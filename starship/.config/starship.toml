@@ -1,0 +1,1091 @@
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║  STARFIELD STARSHIP CONFIG                                    ║
+# ║  Inspired by the Starfield game color palette                 ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+# Enable editor completions based on the config schema
+"$schema" = "https://starship.rs/config-schema.json"
+# ═══════════════════════════════════════════════════════════════
+# GLOBAL SETTINGS
+# ═══════════════════════════════════════════════════════════════
+add_newline = true
+command_timeout = 2000
+scan_timeout = 50
+# Use the Starfield color palette
+palette = "starfield"
+
+# ═══════════════════════════════════════════════════════════════
+# COLOR PALETTE - STARFIELD
+# ═══════════════════════════════════════════════════════════════
+# Gold:    #d4ac63 - Primary accent, achievements, highlights
+# Red:     #cd2435 - Errors, critical alerts, danger
+# Orange:  #e56335 - Warnings, secondary accent, energy
+# Navy:    #2b4d7d - Deep space blue, backgrounds, stability
+# White:   #f4f5f7 - Clean text, UI elements, contrast
+
+[palettes.starfield]
+# Core colors
+gold = "#d4ac63"
+red = "#cd2435"
+orange = "#e56335"
+navy = "#2b4d7d"
+white = "#f4f5f7"
+# Extended palette
+space_black = "#0d1117"
+nebula_purple = "#4a3f6b"
+# Semantic aliases
+warning = "#e56335"
+error = "#cd2435"
+info = "#2b4d7d"
+success = "#d4ac63"
+primary = "#d4ac63"
+accent = "#e56335"
+muted = "#6b7280"
+# ═══════════════════════════════════════════════════════════════
+# PROMPT FORMAT
+# ═══════════════════════════════════════════════════════════════
+format = """
+[░▒▓](gold)\
+$os\
+$sudo\
+[](bg:orange fg:gold)\
+$directory\
+[](fg:orange bg:navy)\
+$custom\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$git_metrics\
+$c\
+$cmake\
+$golang\
+$java\
+$kotlin\
+$lua\
+$nodejs\
+$php\
+$python\
+$ruby\
+$rust\
+$swift\
+$zig\
+$docker_context\
+$conda\
+$meson\
+$spack\
+[](fg:navy bg:space_black)\
+$time\
+[ ](fg:space_black)\
+$line_break\
+$jobs\
+$status\
+$cmd_duration\
+$character"""
+# Right-aligned cloud services and infrastructure
+right_format = """
+$localip\
+$nats\
+$aws\
+$gcloud\
+$azure\
+$openstack\
+$kubernetes\
+$helm\
+$terraform\
+$pulumi\
+$vagrant\
+$nix_shell\
+$container\
+$singularity\
+"""
+
+# ═══════════════════════════════════════════════════════════════
+# CORE MODULES
+# ═══════════════════════════════════════════════════════════════
+
+[os]
+disabled = false
+style = "bg:gold fg:space_black"
+format = "[ $symbol ]($style)"
+
+[os.symbols]
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = "󰣇 "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = "🐉 "
+Emscripten = "🔗 "
+EndeavourOS = " "
+Fedora = "󰣛 "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "🛡️ "
+Illumos = "🐦 "
+Kali = " "
+Linux = "󰌽 "
+Mabox = " "
+Macos = "󰀵 "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = "🌘 "
+Mint = "󰣭 "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "🐡 "
+OpenCloudOS = "☁️ "
+openEuler = " "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = "󱄛 "
+RedHatEnterprise = "󱄛 "
+RockyLinux = " "
+Redox = "🧪 "
+Solus = "󰠻 "
+SUSE = " "
+Ubuntu = "󰕈 "
+Ultramarine = "🔷 "
+Unknown = "❓ "
+Void = " "
+Windows = "󰍲 "
+
+[sudo]
+disabled = false
+style = "bg:gold fg:space_black"
+symbol = "🔐"
+format = "[$symbol]($style)"
+
+[directory]
+style = "bg:orange fg:white"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " 󰌾"
+read_only_style = "bg:orange fg:white"
+home_symbol = "󰋜 ~"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Videos" = " "
+"Developer" = "󰲋 "
+"Projects" = "󰲋 "
+"src" = " "
+".config" = " "
+
+# ═══════════════════════════════════════════════════════════════
+# GIT MODULES
+# ═══════════════════════════════════════════════════════════════
+
+[git_branch]
+symbol = ""
+style = "bg:navy fg:white"
+format = "[ $symbol $branch(:$remote_branch) ]($style)"
+truncation_length = 25
+truncation_symbol = "…"
+
+[git_commit]
+style = "bg:navy fg:white"
+format = "[ $hash$tag ]($style)"
+commit_hash_length = 7
+tag_symbol = " 🏷 "
+only_detached = true
+tag_disabled = false
+
+[git_state]
+style = "bg:navy fg:white"
+format = '[ \($state( $progress_current/$progress_total)\) ]($style)'
+rebase = "REBASING"
+merge = "MERGING"
+revert = "REVERTING"
+cherry_pick = "CHERRY-PICKING"
+bisect = "BISECTING"
+am = "AM"
+am_or_rebase = "AM/REBASE"
+
+[git_status]
+style = "bg:navy fg:white"
+format = "[$all_status$ahead_behind ]($style)"
+conflicted = "⚔${count} "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count} "
+up_to_date = ""
+untracked = "?${count} "
+stashed = "📦${count} "
+modified = "!${count} "
+staged = "+${count} "
+renamed = "»${count} "
+deleted = "✘${count} "
+typechanged = "➜${count} "
+
+[git_metrics]
+disabled = false
+added_style = "bg:navy fg:white"
+deleted_style = "bg:navy fg:white"
+format = "([+$added ]($added_style))([-$deleted ]($deleted_style))"
+only_nonzero_diffs = true
+
+# ═══════════════════════════════════════════════════════════════
+# GIT REMOTE SERVICE DETECTION
+# ═══════════════════════════════════════════════════════════════
+
+[custom.git_remote]
+description = "Display icon for remote Git server"
+command = """
+GIT_REMOTE=$(git remote get-url origin 2>/dev/null)
+case "$GIT_REMOTE" in
+    *github*)     echo " " ;;
+    *gitlab*)     echo " " ;;
+    *bitbucket*)  echo " " ;;
+    *codeberg*)   echo " " ;;
+    *gitea*)      echo " " ;;
+    *azure*)      echo "󰿕 " ;;
+    *codecommit*) echo " " ;;
+    *sr.ht*)      echo " " ;;
+    *forgejo*)    echo " " ;;
+    *gogs*)       echo " " ;;
+    *gitee*)      echo " " ;;
+    *)            [[ -n "$GIT_REMOTE" ]] && echo " " ;;
+esac
+"""
+when = "git rev-parse --is-inside-work-tree 2>/dev/null"
+style = "bg:navy fg:white"
+format = "[$output]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# LANGUAGE & RUNTIME MODULES
+# ═══════════════════════════════════════════════════════════════
+
+[custom.oci]
+description = "Oracle Cloud Infrastructure"
+command = "echo \"${OCI_CLI_PROFILE:-oci}\""
+when = "[[ -n \"$OCI_CLI_PROFILE\" ]] || [[ -n \"$OCI_CONFIG_FILE\" ]] || [[ -f ~/.oci/config ]]"
+style = "bold red"
+symbol = "OCI "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.ibmcloud]
+description = "IBM Cloud"
+command = "ibmcloud target --output json 2>/dev/null | jq -r '.account.name // \"ibm\"' | head -c 15"
+when = "command -v ibmcloud &>/dev/null"
+style = "bold navy"
+symbol = "IBM "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.alicloud]
+description = "Alibaba Cloud"
+command = "echo \"${ALICLOUD_PROFILE:-alicloud}\""
+when = "[[ -n \"$ALICLOUD_PROFILE\" ]] || [[ -n \"$ALICLOUD_ACCESS_KEY_ID\" ]]"
+style = "bold orange"
+symbol = "ALIBABA "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.tencentcloud]
+description = "Tencent Cloud"
+command = "echo 'tcloud'"
+when = "[[ -n \"$TENCENTCLOUD_SECRET_ID\" ]]"
+style = "bold navy"
+symbol = "TENCENT "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.huaweicloud]
+description = "Huawei Cloud"
+command = "echo 'hwc'"
+when = "[[ -n \"$HW_ACCESS_KEY_ID\" ]]"
+style = "bold red"
+symbol = "HUAWEI "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - VPS & INFRASTRUCTURE
+# ═══════════════════════════════════════════════════════════════
+
+[custom.digitalocean]
+description = "DigitalOcean"
+command = "doctl account get --format Email --no-header 2>/dev/null | head -c 20 || echo 'do'"
+when = "command -v doctl &>/dev/null || [[ -n \"$DIGITALOCEAN_ACCESS_TOKEN\" ]]"
+style = "bold navy"
+symbol = " "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.linode]
+description = "Linode/Akamai Cloud"
+command = "echo 'linode'"
+when = "command -v linode-cli &>/dev/null || [[ -n \"$LINODE_CLI_TOKEN\" ]]"
+style = "bold gold"
+symbol = "LINODE "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.vultr]
+description = "Vultr"
+command = "echo 'vultr'"
+when = "command -v vultr-cli &>/dev/null || [[ -n \"$VULTR_API_KEY\" ]]"
+style = "bold navy"
+symbol = "VULTR "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.hetzner]
+description = "Hetzner Cloud"
+command = "hcloud context active 2>/dev/null || echo 'hetzner'"
+when = "command -v hcloud &>/dev/null || [[ -n \"$HCLOUD_TOKEN\" ]]"
+style = "bold red"
+symbol = "HETZNER "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.ovh]
+description = "OVHcloud"
+command = "echo 'ovh'"
+when = "[[ -n \"$OVH_APPLICATION_KEY\" ]]"
+style = "bold navy"
+symbol = "OVH "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.scaleway]
+description = "Scaleway"
+command = "scw info -o json 2>/dev/null | jq -r '.default_organization_id // \"scw\"' | head -c 8"
+when = "command -v scw &>/dev/null || [[ -n \"$SCW_ACCESS_KEY\" ]]"
+style = "bold gold"
+symbol = "SCALEWAY "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.civo]
+description = "Civo Cloud"
+command = "civo region current 2>/dev/null | awk '{print $1}' || echo 'civo'"
+when = "command -v civo &>/dev/null || [[ -n \"$CIVO_TOKEN\" ]]"
+style = "bold orange"
+symbol = "CIVO "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.equinix]
+description = "Equinix Metal"
+command = "echo 'equinix'"
+when = "[[ -n \"$METAL_AUTH_TOKEN\" ]] || [[ -n \"$PACKET_AUTH_TOKEN\" ]]"
+style = "bold red"
+symbol = "EQUINIX "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.upcloud]
+description = "UpCloud"
+command = "echo 'upcloud'"
+when = "[[ -n \"$UPCLOUD_USERNAME\" ]]"
+style = "bold gold"
+symbol = "UPCLOUD "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - EDGE & CDN
+# ═══════════════════════════════════════════════════════════════
+
+[custom.cloudflare]
+description = "Cloudflare"
+command = """
+if [[ -f wrangler.toml ]] || [[ -f wrangler.json ]]; then
+    echo "workers"
+else
+    echo "cf"
+fi
+"""
+when = "command -v wrangler &>/dev/null || [[ -n \"$CLOUDFLARE_API_TOKEN\" ]] || [[ -n \"$CF_API_TOKEN\" ]] || [[ -f wrangler.toml ]] || [[ -f wrangler.json ]]"
+style = "bold orange"
+symbol = "CF "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.fastly]
+description = "Fastly CDN"
+command = "echo 'fastly'"
+when = "command -v fastly &>/dev/null || [[ -n \"$FASTLY_API_TOKEN\" ]]"
+style = "bold red"
+symbol = "FASTLY "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.akamai]
+description = "Akamai"
+command = "echo 'akamai'"
+when = "command -v akamai &>/dev/null || [[ -f ~/.edgerc ]]"
+style = "bold navy"
+symbol = "AKAMAI "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - PAAS & SERVERLESS
+# ═══════════════════════════════════════════════════════════════
+
+[custom.heroku]
+description = "Heroku"
+command = "heroku auth:whoami 2>/dev/null | head -c 20 || echo 'heroku'"
+when = "command -v heroku &>/dev/null || [[ -n \"$HEROKU_API_KEY\" ]]"
+style = "bold gold"
+symbol = " "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.vercel]
+description = "Vercel"
+command = "echo 'vercel'"
+when = "command -v vercel &>/dev/null || [[ -n \"$VERCEL_TOKEN\" ]] || [[ -f vercel.json ]]"
+style = "bold white"
+symbol = "▲ "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.netlify]
+description = "Netlify"
+command = "echo 'netlify'"
+when = "command -v netlify &>/dev/null || [[ -n \"$NETLIFY_AUTH_TOKEN\" ]] || [[ -f netlify.toml ]]"
+style = "bold navy"
+symbol = "NETLIFY "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.render]
+description = "Render"
+command = "echo 'render'"
+when = "[[ -n \"$RENDER_API_KEY\" ]] || [[ -f render.yaml ]]"
+style = "bold gold"
+symbol = "RENDER "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.railway]
+description = "Railway"
+command = "railway whoami 2>/dev/null | head -c 15 || echo 'railway'"
+when = "command -v railway &>/dev/null || [[ -n \"$RAILWAY_TOKEN\" ]]"
+style = "bold red"
+symbol = "🚂 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.flyio]
+description = "Fly.io"
+command = "fly auth whoami 2>/dev/null | head -c 20 || echo 'fly'"
+when = "command -v fly &>/dev/null || command -v flyctl &>/dev/null || [[ -f fly.toml ]]"
+style = "bold gold"
+symbol = "FLY "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.serverless]
+description = "Serverless Framework"
+command = "echo 'sls'"
+when = "[[ -f serverless.yml ]] || [[ -f serverless.yaml ]] || [[ -f serverless.json ]]"
+style = "bold red"
+symbol = "λ "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.sst]
+description = "SST"
+command = "echo 'sst'"
+when = "[[ -f sst.config.ts ]] || [[ -f sst.config.js ]]"
+style = "bold orange"
+symbol = "SST "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - DATABASE SERVICES
+# ═══════════════════════════════════════════════════════════════
+
+[custom.supabase]
+description = "Supabase"
+command = "echo 'supabase'"
+when = "command -v supabase &>/dev/null || [[ -n \"$SUPABASE_ACCESS_TOKEN\" ]] || [[ -f supabase/config.toml ]]"
+style = "bold gold"
+symbol = "SUPABASE "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.planetscale]
+description = "PlanetScale"
+command = "pscale org show 2>/dev/null | head -1 | awk '{print $1}' || echo 'pscale'"
+when = "command -v pscale &>/dev/null || [[ -n \"$PLANETSCALE_SERVICE_TOKEN\" ]]"
+style = "bold white"
+symbol = "PSCALE "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.neon]
+description = "Neon Postgres"
+command = "echo 'neon'"
+when = "command -v neonctl &>/dev/null || [[ -n \"$NEON_API_KEY\" ]]"
+style = "bold navy"
+symbol = "NEON "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.turso]
+description = "Turso"
+command = "turso db list 2>/dev/null | head -1 || echo 'turso'"
+when = "command -v turso &>/dev/null || [[ -n \"$TURSO_API_TOKEN\" ]]"
+style = "bold red"
+symbol = "TURSO "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.upstash]
+description = "Upstash"
+command = "echo 'upstash'"
+when = "[[ -n \"$UPSTASH_REDIS_REST_URL\" ]] || [[ -n \"$UPSTASH_KAFKA_REST_URL\" ]]"
+style = "bold gold"
+symbol = "UPSTASH "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.mongodb_atlas]
+description = "MongoDB Atlas"
+command = "atlas config describe 2>/dev/null | grep -m1 'org_id' | cut -d: -f2 | head -c 10 || echo 'atlas'"
+when = "command -v atlas &>/dev/null || [[ -n \"$MONGODB_ATLAS_PUBLIC_KEY\" ]]"
+style = "bold gold"
+symbol = "󰌪 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - CONTAINER ORCHESTRATION
+# ═══════════════════════════════════════════════════════════════
+
+[custom.openshift]
+description = "Red Hat OpenShift"
+command = "oc project -q 2>/dev/null || echo 'openshift'"
+when = "command -v oc &>/dev/null"
+style = "bold red"
+symbol = "󰠿 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.rancher]
+description = "Rancher"
+command = "rancher context current 2>/dev/null | head -c 15 || echo 'rancher'"
+when = "command -v rancher &>/dev/null"
+style = "bold navy"
+symbol = "󰠰 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.nomad]
+description = "HashiCorp Nomad"
+command = "echo \"${NOMAD_ADDR:-nomad}\""
+when = "command -v nomad &>/dev/null || [[ -n \"$NOMAD_ADDR\" ]]"
+style = "bold gold"
+symbol = "NOMAD "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - IAC
+# ═══════════════════════════════════════════════════════════════
+
+[custom.opentofu]
+description = "OpenTofu"
+command = "tofu workspace show 2>/dev/null || echo 'tofu'"
+when = "command -v tofu &>/dev/null"
+extensions = ["tf"]
+style = "bold orange"
+symbol = "TOFU "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.ansible]
+description = "Ansible"
+command = "echo 'ansible'"
+when = "[[ -f ansible.cfg ]] || [[ -f playbook.yml ]] || [[ -d roles ]]"
+style = "bold red"
+symbol = "󱂚 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.cdk]
+description = "AWS CDK"
+command = "echo 'cdk'"
+when = "[[ -f cdk.json ]]"
+style = "bold orange"
+symbol = "CDK "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - SECRETS & SECURITY
+# ═══════════════════════════════════════════════════════════════
+
+[custom.vault]
+description = "HashiCorp Vault"
+command = "echo \"${VAULT_ADDR:-vault}\" | sed 's|https\\?://||' | cut -d: -f1 | head -c 15"
+when = "command -v vault &>/dev/null || [[ -n \"$VAULT_ADDR\" ]]"
+style = "bold orange"
+symbol = "VAULT "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.1password]
+description = "1Password CLI"
+command = "op account get --format=json 2>/dev/null | jq -r '.email // \"1pass\"' | head -c 15"
+when = "command -v op &>/dev/null"
+style = "bold navy"
+symbol = "󰢁 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.doppler]
+description = "Doppler"
+command = "doppler configure get project --plain 2>/dev/null || echo 'doppler'"
+when = "command -v doppler &>/dev/null || [[ -f doppler.yaml ]]"
+style = "bold gold"
+symbol = "DOPPLER "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - CI/CD
+# ═══════════════════════════════════════════════════════════════
+
+[custom.github_actions]
+description = "GitHub Actions"
+command = "echo 'gha'"
+when = "[[ -n \"$GITHUB_ACTIONS\" ]]"
+style = "bold white"
+symbol = " "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.gitlab_ci]
+description = "GitLab CI"
+command = "echo 'glci'"
+when = "[[ -n \"$GITLAB_CI\" ]]"
+style = "bold orange"
+symbol = " "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.jenkins]
+description = "Jenkins"
+command = "echo 'jenkins'"
+when = "[[ -n \"$JENKINS_URL\" ]] || [[ -f Jenkinsfile ]]"
+style = "bold red"
+symbol = "󰿌 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - NETWORK & CONNECTION STATUS
+# ═══════════════════════════════════════════════════════════════
+
+[custom.ssh_indicator]
+description = "Show SSH connection status"
+command = "echo 'SSH'"
+when = "[[ -n \"$SSH_CONNECTION\" ]]"
+style = "bold red"
+symbol = "󰣀 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[custom.vpn]
+description = "Show VPN connection status"
+command = """
+if ip link show tun0 &>/dev/null || ip link show wg0 &>/dev/null || ip link show tailscale0 &>/dev/null; then
+    echo "VPN"
+fi
+"""
+when = "command -v ip &>/dev/null"
+style = "bold gold"
+symbol = "󰖂 "
+format = "[$symbol$output ]($style)"
+shell = ["bash", "--noprofile", "--norc"]
+ignore_timeout = true
+
+[c]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[cmake]
+symbol = "△ "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[golang]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[java]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[kotlin]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[lua]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[nodejs]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[php]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[python]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version)( \\($virtualenv\\)) ]($style)"
+
+[ruby]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[rust]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[swift]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+[zig]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol($version) ]($style)"
+
+# ═══════════════════════════════════════════════════════════════
+# CONTAINER & ENVIRONMENT MODULES
+# ═══════════════════════════════════════════════════════════════
+
+[docker_context]
+symbol = " "
+style = "bg:navy fg:gold"
+format = "[$symbol$context ]($style)"
+only_with_files = true
+
+[conda]
+symbol = "🅒 "
+style = "bg:navy fg:gold"
+format = "[$symbol$environment ]($style)"
+ignore_base = true
+
+[meson]
+symbol = "⬢ "
+style = "bg:navy fg:gold"
+format = "[$symbol$project ]($style)"
+
+[spack]
+symbol = "🅢 "
+style = "bg:navy fg:gold"
+format = "[$symbol$environment ]($style)"
+
+# ═══════════════════════════════════════════════════════════════
+# TIME & STATUS MODULES
+# ═══════════════════════════════════════════════════════════════
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:space_black fg:gold"
+format = "[  $time ]($style)"
+
+[line_break]
+disabled = false
+
+[jobs]
+symbol = "✦"
+style = "bold gold"
+number_threshold = 1
+symbol_threshold = 1
+format = "[$symbol$number]($style) "
+
+[status]
+disabled = false
+symbol = "✖"
+success_symbol = ""
+format = "[$symbol$status]($style) "
+style = "bold red"
+map_symbol = true
+
+[cmd_duration]
+min_time = 500
+style = "bold gold"
+format = "[ 󱎫 $duration]($style) "
+show_milliseconds = false
+show_notifications = false
+
+[character]
+success_symbol = "[❯](bold gold)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold navy)"
+vimcmd_replace_one_symbol = "[❮](bold orange)"
+vimcmd_replace_symbol = "[❮](bold orange)"
+vimcmd_visual_symbol = "[❮](bold gold)"
+
+# ═══════════════════════════════════════════════════════════════
+# NETWORK & HOST MODULES
+# ═══════════════════════════════════════════════════════════════
+
+[localip]
+disabled = false
+ssh_only = true
+style = "bold gold"
+format = "[$localipv4 ]($style)"
+
+[hostname]
+ssh_only = true
+style = "bold orange"
+format = "[@$hostname]($style) "
+trim_at = "."
+
+[username]
+style_user = "bold gold"
+style_root = "bold red"
+format = "[$user]($style) "
+disabled = true
+show_always = false
+
+# ═══════════════════════════════════════════════════════════════
+# CLOUD PROVIDERS - NATIVE MODULES
+# ═══════════════════════════════════════════════════════════════
+
+[aws]
+disabled = false
+symbol = " "
+style = "bold orange"
+format = "[$symbol($profile )($region)]($style) "
+expiration_symbol = "⚠"
+force_display = false
+
+[aws.profile_aliases]
+default = "def"
+
+# Region aliases removed - now shows full region names like us-east-1
+
+[gcloud]
+disabled = false
+symbol = "󱇶 "
+style = "bold gold"
+format = "[$symbol($project )($region)]($style) "
+
+# Region aliases removed - now shows full region names
+
+[azure]
+disabled = false
+symbol = "󰠅 "
+style = "bold navy"
+format = "[$symbol($subscription)]($style) "
+
+[openstack]
+disabled = false
+symbol = "󰴭 "
+style = "bold red"
+format = '[$symbol$cloud(\($project\))]($style) '
+
+# ═══════════════════════════════════════════════════════════════
+# INFRASTRUCTURE MODULES - NATIVE
+# ═══════════════════════════════════════════════════════════════
+
+[kubernetes]
+disabled = false
+symbol = "󱃾 "
+style = "bold gold"
+format = '[$symbol$context( \($namespace\))]($style) '
+
+[kubernetes.context_aliases]
+"docker-desktop" = "docker"
+"minikube" = "mini"
+"kind-.*" = "kind"
+"arn:aws:eks:.*:.*:cluster/(?P<var_cluster>.*)" = "eks:$var_cluster"
+"gke_.*_.*_(?P<var_cluster>.*)" = "gke:$var_cluster"
+
+[terraform]
+disabled = false
+symbol = "󱁢 "
+style = "bold gold"
+format = "[$symbol$workspace]($style) "
+
+[pulumi]
+disabled = false
+symbol = " "
+style = "bold orange"
+format = "[$symbol($stack)]($style) "
+
+[helm]
+disabled = false
+symbol = "⎈ "
+style = "bold navy"
+format = "[$symbol($version)]($style) "
+
+[vagrant]
+disabled = false
+symbol = "⍱ "
+style = "bold gold"
+format = "[$symbol($version)]($style) "
+
+[nix_shell]
+disabled = false
+symbol = "❄️ "
+style = "bold gold"
+format = '[$symbol$state( \($name\))]($style) '
+impure_msg = "impure"
+pure_msg = "pure"
+unknown_msg = ""
+
+[nats]
+disabled = false
+symbol = "✉️ "
+style = "bold red"
+format = "[$symbol($name)]($style) "
+
+[container]
+disabled = false
+symbol = "⬢ "
+style = "bold orange"
+format = "[$symbol$name]($style) "
+
+[singularity]
+disabled = false
+symbol = "📦 "
+style = "bold gold"
+format = "[$symbol$env]($style) "
+
+[direnv]
+disabled = false
+symbol = "󰒍 "
+style = "bold orange"
+format = "[$symbol$loaded/$allowed]($style) "
+detect_files = [".envrc"]
+
+# ═══════════════════════════════════════════════════════════════
+# BATTERY
+# ═══════════════════════════════════════════════════════════════
+
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+unknown_symbol = "󰁽 "
+empty_symbol = "󰂎 "
+
+[[battery.display]]
+threshold = 10
+style = "bold red"
+discharging_symbol = "💀 "
+
+[[battery.display]]
+threshold = 30
+style = "bold orange"
+
+# ═══════════════════════════════════════════════════════════════
+# PACKAGE
+# ═══════════════════════════════════════════════════════════════
+
+[package]
+disabled = false
+symbol = "📦 "
+style = "bold gold"
+format = "[$symbol$version]($style) "
+display_private = false
+
+# ═══════════════════════════════════════════════════════════════
+# MEMORY (Optional - disabled by default)
+# ═══════════════════════════════════════════════════════════════
+
+[memory_usage]
+disabled = true
+threshold = 75
+symbol = "󰍛 "
+style = "bold red"
+format = "[$symbol$ram( | $swap)]($style) "
+
+# ═══════════════════════════════════════════════════════════════
+# SHELL NESTING
+# ═══════════════════════════════════════════════════════════════
+
+[shlvl]
+disabled = true
+symbol = "↕️ "
+style = "bold red"
+threshold = 2
+format = "[$symbol$shlvl]($style) "
+
+# ═══════════════════════════════════════════════════════════════
+# CUSTOM MODULES - CLOUD PROVIDERS (Non-native)
+# ═══════════════════════════════════════════════════════════════
