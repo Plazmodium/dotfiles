@@ -1,0 +1,81 @@
+# Ghostty theme
+theme = Monokai Classic
+bold-is-bright = true
+
+background = #272822
+foreground = #f8f8f2
+palette = 0=#272822
+palette = 1=#f92672
+palette = 2=#a6e22e
+palette = 3=#fd971f
+palette = 4=#66d9ef
+palette = 5=#ae81ff
+palette = 6=#a1efe4
+palette = 7=#f8f8f2
+palette = 8=#75715e
+palette = 9=#f92672
+palette = 10=#a6e22e
+palette = 11=#fd971f
+palette = 12=#66d9ef
+palette = 13=#ae81ff
+palette = 14=#a1efe4
+palette = 15=#f8f8f2
+bold-is-bright = true
+cursor-color = #ffA500
+
+#unfocused-split-opacity = 0.8
+unfocused-split-fill = orange
+split-divider-color = light yellow
+#focus-follows-mouse = true
+
+# Updates
+auto-update-channel = tip
+
+# Shell integrations
+shell-integration = zsh
+quit-after-last-window-closed = true
+window-save-state = always
+
+# Font family
+font-family = Hack
+font-style-italic = Regular Italic
+font-style-bold = Bold
+font-style-bold-italic = Bold Italic
+
+font-feature = calt  # Enables contextual alternates (includes many programming ligatures)
+font-feature = liga  # Enables standard ligatures
+
+# Font size
+font-size = 14
+
+# Opacity of split windows
+unfocused-split-opacity = 0.97
+
+# Set the background-opacity to be fully opaque
+background-opacity = 1.0
+
+# Cursor style
+cursor-style-blink = true
+
+# Clipboard settings
+clipboard-read = allow
+clipboard-write = allow
+
+# macos options
+macos-option-as-alt = true
+macos-titlebar-proxy-icon = hidden
+
+# Always show ghostty as the title
+title = ghostty 
+
+# Window settings
+window-width = 90
+window-height = 30
+window-colorspace = display-p3
+window-padding-color = background
+window-padding-balance = true
+window-padding-x = 0
+window-padding-y = 0
+
+# Decrease scroll sensitivity
+mouse-scroll-multiplier = 0.4

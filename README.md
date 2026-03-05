@@ -12,6 +12,7 @@ My personal dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/
 | `git`      | Global git ignore                    |
 | `opencode` | OpenCode agents, plugins, sounds     |
 | `fabric`   | Fabric AI patterns and strategies    |
+| `ghostty`  | Ghostty terminal config              |
 
 ## Setup on a New Machine
 
@@ -24,7 +25,7 @@ git clone git@github.com:Plazmodium/dotfiles.git ~/.dotfiles
 
 # Stow everything
 cd ~/.dotfiles
-stow nvim starship zsh git opencode fabric
+stow nvim starship zsh git opencode fabric ghostty
 ```
 
 > **Note:** If default config files already exist (e.g., `~/.zshrc`), remove or back them up before stowing.
