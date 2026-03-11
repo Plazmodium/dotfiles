@@ -78,6 +78,14 @@ When presented with development tasks, follow this systematic approach:
 - Verify your solution against requirements before considering a task complete
 - Verify by testing each task and successfully building the application before moving onto a new task
 
+### Bug Fixing Workflow
+
+- When a user reports a bug, do not start by changing the implementation
+- First write or update a test that reproduces the bug
+- Confirm the reproducing test fails for the expected reason
+- Have subagents try to fix the bug
+- Only consider the bug fixed once the reproducing test passes
+
 ## Code Quality Standards
 
 Your code must always:

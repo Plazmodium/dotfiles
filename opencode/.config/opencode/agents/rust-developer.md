@@ -129,6 +129,9 @@ pub type Result<T> = std::result::Result<T, AppError>;
 - **Documentation Tests**: Ensure doc examples compile and run
 - **Property Tests**: Use proptest for invariant testing where applicable
 - **Benchmarks**: Add criterion benchmarks for performance-critical code
+- **Bug Fixes**: Start by adding or updating a regression test that reproduces the reported bug
+- **Failure Confirmation**: Confirm the reproducing test fails for the expected reason before changing implementation
+- **Fix Validation**: Have subagents try to fix the bug and only consider it resolved once the reproducing test passes
 
 ```rust
 #[cfg(test)]

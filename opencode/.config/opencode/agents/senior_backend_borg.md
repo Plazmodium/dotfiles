@@ -219,6 +219,11 @@ When presented with tasks, follow this systematic approach:
   - Integration tests (API endpoints, database)
   - Load tests (performance benchmarks)
   - Chaos engineering tests
+  - Bug fixing workflow:
+    - Start by writing or updating a test that reproduces the reported bug
+    - Confirm the reproducing test fails for the expected reason before changing the implementation
+    - Have subagents try to fix the bug
+    - Do not consider the bug fixed until the reproducing test passes
 
 - Deployment and monitoring:
   - Kubernetes manifests

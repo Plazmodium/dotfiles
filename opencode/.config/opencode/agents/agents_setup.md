@@ -1,13 +1,15 @@
 # OpenCode Agents Setup Guide
 
-This guide covers the installation and usage of three complementary agents for full-stack software development.
+This guide covers the installation and usage of five complementary agents for full-stack software development.
 
 ## 📦 Available Agents
 
-### 1. **backend-systems-architect** (Primary Agent)
+### 1. **senior_backend_borg** (Primary Agent)
+
 Expert backend architect for distributed systems, APIs, and enterprise-grade backend engineering.
 
 **Use for:**
+
 - Building microservices and distributed systems
 - Designing and implementing REST/GraphQL/gRPC APIs
 - Database design, optimization, and migrations
@@ -16,10 +18,12 @@ Expert backend architect for distributed systems, APIs, and enterprise-grade bac
 - Security (JWT, OAuth 2.0, OWASP compliance)
 - Performance optimization and scalability
 
-### 2. **senior-frontend-dev** (Primary Agent)
+### 2. **senior_frontend_borg** (Primary Agent)
+
 Expert implementation agent for building production-quality frontend applications.
 
 **Use for:**
+
 - Building Angular, Next.js, or Vue.js applications
 - Implementing UI components (PrimeNG, Material, daisyUI)
 - TypeScript, CSS, SCSS, Tailwind development
@@ -27,15 +31,41 @@ Expert implementation agent for building production-quality frontend application
 - Responsive design and accessibility
 - State management and API integration
 
-### 3. **prof-educate-me** (Subagent)
+### 3. **prof_borg** (Subagent)
+
 Expert educator for understanding concepts, patterns, and architectural decisions.
 
 **Use for:**
+
 - Learning concepts (CAP theorem, consistent hashing, etc.)
 - Understanding design patterns (SAGA, Circuit Breaker, CQRS)
 - Explaining trade-offs and architectural decisions
 - Theory behind implementation decisions
 - Quick technical explanations and clarifications
+
+### 4. **code-reviewer-borg** (Subagent)
+
+Expert code review agent for finding correctness, safety, and maintainability issues with grounded, high-signal feedback.
+
+**Use for:**
+
+- Reviewing diffs before commit or PR
+- Finding correctness and regression risks
+- Catching type safety, validation, and error handling issues
+- Checking whether a bug fix includes a reproducing regression test
+- Identifying the smallest necessary follow-up changes
+
+### 5. **mother** (Subagent)
+
+Principal engineering advisor and mother to the borgs for deeper analysis before acting.
+
+**Use for:**
+
+- Architecture decisions with real trade-offs
+- Complex debugging, race conditions, and distributed failure analysis
+- Planning refactors into minimal, low-risk increments
+- Pre-implementation strategy on risky or expensive changes
+- Getting one grounded recommendation before the builder agents proceed
 
 ---
 
@@ -48,13 +78,15 @@ Expert educator for understanding concepts, patterns, and architectural decision
 mkdir -p .opencode/agent
 
 # Copy all agents
-cp backend-systems-architect.md .opencode/agent/
-cp senior-frontend-dev.md .opencode/agent/
-cp prof-educate-me.md .opencode/agent/
+cp senior_backend_borg.md .opencode/agent/
+cp senior_frontend_borg.md .opencode/agent/
+cp prof_borg.md .opencode/agent/
+cp code-reviewer-borg.md .opencode/agent/
+cp mother.md .opencode/agent/
 
 # Commit to version control so team members get them
 git add .opencode/
-git commit -m "Add OpenCode agents for backend, frontend, and education"
+git commit -m "Add OpenCode agents for backend, frontend, education, review, and strategy"
 ```
 
 **Benefit**: Entire team uses consistent agents and workflows.
@@ -66,9 +98,11 @@ git commit -m "Add OpenCode agents for backend, frontend, and education"
 mkdir -p ~/.config/opencode/agent
 
 # Copy all agents
-cp backend-systems-architect.md ~/.config/opencode/agent/
-cp senior-frontend-dev.md ~/.config/opencode/agent/
-cp prof-educate-me.md ~/.config/opencode/agent/
+cp senior_backend_borg.md ~/.config/opencode/agent/
+cp senior_frontend_borg.md ~/.config/opencode/agent/
+cp prof_borg.md ~/.config/opencode/agent/
+cp code-reviewer-borg.md ~/.config/opencode/agent/
+cp mother.md ~/.config/opencode/agent/
 ```
 
 **Benefit**: Available across all your projects.
@@ -79,12 +113,14 @@ You can mix and match - install some globally and some per-project:
 
 ```bash
 # Backend & frontend globally (use across all projects)
-cp backend-systems-architect.md ~/.config/opencode/agent/
-cp senior-frontend-dev.md ~/.config/opencode/agent/
+cp senior_backend_borg.md ~/.config/opencode/agent/
+cp senior_frontend_borg.md ~/.config/opencode/agent/
 
-# Education subagent per-project (team-specific context)
+# Education, review, and strategy subagents per-project (team-specific context)
 mkdir -p .opencode/agent
-cp prof-educate-me.md .opencode/agent/
+cp prof_borg.md .opencode/agent/
+cp code-reviewer-borg.md .opencode/agent/
+cp mother.md .opencode/agent/
 ```
 
 ---
@@ -94,40 +130,79 @@ cp prof-educate-me.md .opencode/agent/
 ### Primary Agents (Backend & Frontend)
 
 **Switch between them:**
+
 ```bash
 # Press Tab key to cycle through primary agents
 # Or use your configured switch_agent keybind
 ```
 
 **Direct invocation:**
-```
-@backend-systems-architect design a distributed order processing system with SAGA pattern
-@senior-frontend-dev create a login form with validation and accessibility
+
+```text
+@senior_backend_borg design a distributed order processing system with SAGA pattern
+@senior_frontend_borg create a login form with validation and accessibility
 ```
 
 **What they do:**
+
 1. Analyze requirements (functional + non-functional)
 2. Break down into manageable tasks
 3. Ask for confirmation
 4. Implement step-by-step with testing
 5. Verify against requirements before completion
 
-### Prof Educate Me (Subagent)
+### Prof Borg (Subagent)
 
 **Invoke with @ mention:**
-```
-@prof-educate-me explain the CAP theorem in the context of my microservices
-@prof-educate-me what's the difference between orchestration and choreography SAGA?
-@prof-educate-me why use consistent hashing in distributed caching?
-@prof-educate-me explain JWT vs session authentication trade-offs
+
+```text
+@prof_borg explain the CAP theorem in the context of my microservices
+@prof_borg what's the difference between orchestration and choreography SAGA?
+@prof_borg why use consistent hashing in distributed caching?
+@prof_borg explain JWT vs session authentication trade-offs
 ```
 
 **What it does:**
+
 - Provides concise, practical explanations
 - Focuses on the 20% that gives 80% value
 - Uses examples and analogies
 - Explains trade-offs, not just definitions
 - No code implementation (read-only)
+
+### Code Reviewer Borg (Subagent)
+
+**Invoke with @ mention:**
+
+```text
+@code-reviewer-borg review this diff for correctness and regression risk
+@code-reviewer-borg review this bug fix and check whether the tests prove it
+@code-reviewer-borg find the highest-signal issues in these changes
+```
+
+**What it does:**
+
+- Reviews code changes for correctness, safety, maintainability, and repo fit
+- Prioritizes grounded, actionable findings over generic nits
+- Calls out missing regression tests for bug fixes
+- Stays read-only and does not modify files
+
+### Mother (Subagent)
+
+**Invoke with @ mention:**
+
+```text
+@mother weigh the trade-offs between these two caching designs and recommend one
+@mother analyze this race condition and propose the smallest safe fix
+@mother review this refactor plan and suggest a lower-risk sequence
+```
+
+**What it does:**
+
+- Provides deeper technical analysis before implementation starts
+- Recommends one primary path with explicit trade-offs and effort signals
+- Favors minimal, maintainable, low-risk changes
+- Stays read-only and does not modify files
 
 ---
 
@@ -137,15 +212,15 @@ cp prof-educate-me.md .opencode/agent/
 
 ```bash
 # Backend: Design the API
-You: "@backend-systems-architect design a user authentication API with JWT"
+You: "@senior_backend_borg design a user authentication API with JWT"
 Backend: [Analyzes, designs schema, creates OpenAPI spec, implements with tests]
 
 # Frontend: Build the UI
-You: "@senior-frontend-dev create login component that uses this API"
+You: "@senior_frontend_borg create login component that uses this API"
 Frontend: [Analyzes, creates component with validation and error handling]
 
 # Learn about the pattern
-You: "@prof-educate-me explain why JWT is stateless and its security implications"
+You: "@prof_borg explain why JWT is stateless and its security implications"
 Prof: [Explains concept, trade-offs, and best practices]
 ```
 
@@ -153,15 +228,15 @@ Prof: [Explains concept, trade-offs, and best practices]
 
 ```bash
 # Learn the pattern first
-You: "@prof-educate-me explain SAGA pattern for distributed transactions"
+You: "@prof_borg explain SAGA pattern for distributed transactions"
 Prof: [Explains orchestration vs choreography, trade-offs]
 
 # Design the system
-You: "@backend-systems-architect implement order SAGA with choreography using Kafka"
+You: "@senior_backend_borg implement order SAGA with choreography using Kafka"
 Backend: [Designs event flow, implements services, adds compensation logic]
 
 # Clarify during implementation
-You: "@prof-educate-me what's idempotency and why does it matter here?"
+You: "@prof_borg what's idempotency and why does it matter here?"
 Prof: [Explains with practical examples]
 ```
 
@@ -169,15 +244,15 @@ Prof: [Explains with practical examples]
 
 ```bash
 # Backend investigation
-You: "@backend-systems-architect optimize this slow database query"
+You: "@senior_backend_borg optimize this slow database query"
 Backend: [Analyzes query, adds indexes, rewrites with EXPLAIN analysis]
 
 # Learn the theory
-You: "@prof-educate-me explain database indexing strategies and B-tree vs hash indexes"
+You: "@prof_borg explain database indexing strategies and B-tree vs hash indexes"
 Prof: [Explains concepts and when to use each]
 
 # Frontend optimization
-You: "@senior-frontend-dev optimize component rendering performance"
+You: "@senior_frontend_borg optimize component rendering performance"
 Frontend: [Implements memoization, lazy loading, code splitting]
 ```
 
@@ -185,11 +260,11 @@ Frontend: [Implements memoization, lazy loading, code splitting]
 
 ```bash
 # Architecture design
-You: "@backend-systems-architect design a distributed caching layer for our API"
+You: "@senior_backend_borg design a distributed caching layer for our API"
 Backend: [Designs with consistent hashing, Redis cluster, cache invalidation]
 
 # Learn the concepts
-You: "@prof-educate-me why use consistent hashing over simple modulo?"
+You: "@prof_borg why use consistent hashing over simple modulo?"
 Prof: [Explains minimal key remapping during scaling]
 
 # Implementation continues
@@ -201,44 +276,85 @@ Backend: [Implements with proper TTLs, cache warming, monitoring]
 
 ```bash
 # Backend API
-You: "@backend-systems-architect create REST API for product catalog with pagination"
+You: "@senior_backend_borg create REST API for product catalog with pagination"
 Backend: [Implements with Spring Boot, OpenAPI spec, database optimization]
 
 # Frontend integration
-You: "@senior-frontend-dev create product listing component using this API"
+You: "@senior_frontend_borg create product listing component using this API"
 Frontend: [Builds with infinite scroll, loading states, error handling]
 
 # Understanding integration
-You: "@prof-educate-me explain REST pagination strategies and trade-offs"
+You: "@prof_borg explain REST pagination strategies and trade-offs"
 Prof: [Explains offset vs cursor pagination, performance implications]
+```
+
+### Example 6: Review Before Merge
+
+```bash
+# Implement the change
+You: "@senior_frontend_borg fix the checkout total rounding bug"
+Frontend: [Adds a reproducing test, fixes the bug, and gets the test passing]
+
+# Review the diff before merge
+You: "@code-reviewer-borg review this bug fix for correctness, regression risk, and whether the tests prove it"
+Reviewer: [Flags any high-signal issues and checks that the regression test really covers the bug]
+
+# Clarify trade-offs if needed
+You: "@prof_borg explain the trade-offs between rounding per line item vs only at the final total"
+Prof: [Explains correctness, accounting, and UX implications]
+```
+
+### Example 7: Backend Review Flow
+
+```bash
+# Implement the bug fix
+You: "@senior_backend_borg fix the duplicate order creation bug in our payment retry flow"
+Backend: [Adds a reproducing test, fixes the idempotency bug, and gets the test passing]
+
+# Review before merge
+You: "@code-reviewer-borg review this backend fix for correctness, concurrency risk, and whether the regression test is strong enough"
+Reviewer: [Checks for missing edge cases, race conditions, and weak test coverage]
+
+# Clarify the underlying pattern
+You: "@prof_borg explain idempotency keys and why they matter in retry-heavy distributed systems"
+Prof: [Explains how they prevent duplicate side effects and where they can still fail]
 ```
 
 ---
 
 ## ⚙️ Agent Configuration Details
 
-### backend-systems-architect
+### senior_backend_borg
 
 ```yaml
-mode: primary                   # Main backend development agent
-model: claude-sonnet-4          # Balanced speed and capability
-temperature: 0.2                # Low for precise, deterministic code
+mode: primary
+model: openai/gpt-5.3-codex
+temperature: 0.2
 tools:
-  write: true                   # Can create files
-  edit: true                    # Can modify files
-  bash: true                    # Can run commands
-permissions:
-  edit: ask                     # Asks before modifying files
+  write: true
+  edit: true
+  bash: true
+permission:
+  edit: ask
   bash:
-    "mvn|gradle|dotnet *": allow     # Auto-approve build tools
-    "docker *": allow                # Auto-approve Docker
-    "kubectl get|describe*": allow   # Auto-approve K8s read ops
-    "psql|mysql|redis-cli *": allow  # Auto-approve DB CLIs
-    "git status|diff|log*": allow    # Auto-approve safe git
-    "*": ask                         # Ask for everything else
+    "mvn *": ask
+    "gradle *": ask
+    "dotnet *": ask
+    "npm *": ask
+    "docker *": ask
+    "kubectl get*": ask
+    "kubectl describe*": ask
+    "psql *": ask
+    "mysql *": ask
+    "redis-cli *": ask
+    "git status": ask
+    "git diff": ask
+    "git log*": ask
+    "*": ask
 ```
 
 **Specializes in:**
+
 - .NET Core, Spring Boot, distributed systems
 - MySQL, PostgreSQL, Redis, MongoDB
 - Docker, Kubernetes, service mesh
@@ -246,49 +362,96 @@ permissions:
 - JWT, OAuth 2.0, OWASP security
 - Performance optimization, scalability
 
-### senior-frontend-dev
+### senior_frontend_borg
 
 ```yaml
-mode: primary                   # Main frontend development agent
-model: claude-sonnet-4          # Balanced speed and capability
-temperature: 0.2                # Low for precise, deterministic code
+mode: primary
+model: openai/gpt-5.3-codex
+temperature: 0.2
 tools:
-  write: true                   # Can create files
-  edit: true                    # Can modify files
-  bash: true                    # Can run commands
-permissions:
-  edit: ask                     # Asks before modifying files
+  write: true
+  edit: true
+  bash: true
+permission:
+  edit: ask
   bash:
-    "npm|yarn|pnpm|bun *": allow     # Auto-approve package managers
-    "git status|diff|log*": allow    # Auto-approve safe git
-    "*": ask                         # Ask for everything else
+    "npm *": ask
+    "yarn *": ask
+    "pnpm *": ask
+    "bun *": ask
+    "git status": allow
+    "git diff": allow
+    "git log*": allow
+    "*": ask
 ```
 
 **Specializes in:**
+
 - Angular, Next.js, Vue.js frameworks
 - PrimeNG, Material, HeroUI, daisyUI components
 - TypeScript, CSS, SCSS, Tailwind
 - Responsive design, accessibility
 - Testing with Vitest, Jest, Wallaby
 
-### prof-educate-me
+### prof_borg
 
 ```yaml
-mode: subagent                  # Invoked for specific tasks
-model: claude-sonnet-4          # Same model for consistency
-temperature: 0.3                # Slightly higher for clear explanations
+mode: subagent
+model: openai/gpt-5.3-codex
+temperature: 0.3
 tools:
-  write: false                  # Read-only, no file creation
-  edit: false                   # No modifications
-  bash: false                   # No command execution
+  write: false
+  edit: false
+  bash: false
 ```
 
 **Specializes in:**
+
 - Teaching distributed systems concepts
 - Explaining architectural patterns
 - Clarifying trade-offs and best practices
 - Algorithm and data structure explanations
 - 80/20 principle: essential knowledge for maximum value
+
+### code-reviewer-borg
+
+```yaml
+mode: subagent
+model: openai/gpt-5.3-codex
+temperature: 0.2
+tools:
+  write: false
+  edit: false
+  bash: false
+```
+
+**Specializes in:**
+
+- Correctness and regression review
+- Safety, validation, and error handling issues
+- Type safety and maintainability concerns
+- Test adequacy, especially for bug fixes
+- Minimal, actionable review feedback
+
+### mother
+
+```yaml
+mode: subagent
+model: openai/gpt-5.4
+temperature: 0.2
+tools:
+  write: false
+  edit: false
+  bash: false
+```
+
+**Specializes in:**
+
+- Architecture trade-offs and strategic recommendations
+- Complex debugging and failure analysis
+- Refactor planning in minimal increments
+- Pre-implementation risk analysis
+- One high-confidence recommendation with guardrails
 
 ---
 
@@ -318,7 +481,7 @@ model: anthropic/claude-opus-4-20250514
 
 ### Modify Permissions
 
-In `backend-systems-architect.md`:
+In `senior_backend_borg.md`:
 
 ```yaml
 permission:
@@ -329,7 +492,7 @@ permission:
     "docker run*": allow  # Auto-approve Docker runs
 ```
 
-In `senior-frontend-dev.md`:
+In `senior_frontend_borg.md`:
 
 ```yaml
 permission:
@@ -438,18 +601,22 @@ This is a microservices-based e-commerce platform with event-driven architecture
 
 ### Backend Services
 ```
+
 DATABASE_URL=postgresql://...
 REDIS_URL=redis://...
 RABBITMQ_URL=amqp://...
 JWT_SECRET=...
 STRIPE_API_KEY=...
-```
+
+```text
 
 ### Frontend Applications
 ```
-NEXT_PUBLIC_API_URL=https://api.example.com
+
+NEXT_PUBLIC_API_URL=<https://api.example.com>
 NEXT_PUBLIC_STRIPE_KEY=pk_...
-```
+
+```text
 
 ## Testing Strategy
 
@@ -484,7 +651,7 @@ NEXT_PUBLIC_STRIPE_KEY=pk_...
 - **Health Checks**: Liveness and readiness probes mandatory
 ```
 
-All three agents will automatically read and follow these project-specific rules.
+All five agents will automatically read and follow these project-specific rules.
 
 ---
 
@@ -493,6 +660,7 @@ All three agents will automatically read and follow these project-specific rules
 ### Agents Not Showing Up
 
 **Check file locations:**
+
 ```bash
 # Project-specific
 ls .opencode/agent/
@@ -500,18 +668,22 @@ ls .opencode/agent/
 # Global
 ls ~/.config/opencode/agent/
 
-# Should see all three agents
-# backend-systems-architect.md
-# senior-frontend-dev.md
-# prof-educate-me.md
+# Should see all five agents
+# senior_backend_borg.md
+# senior_frontend_borg.md
+# prof_borg.md
+# code-reviewer-borg.md
+# mother.md
 ```
 
 **Verify YAML frontmatter:**
+
 - Must have `---` delimiters at start and end
 - Valid YAML syntax (no tabs, proper indentation)
 - Required fields: `description`, `mode`
 
 **Restart OpenCode:**
+
 ```bash
 # Exit current session and restart
 # Agents are loaded at startup
@@ -520,7 +692,7 @@ ls ~/.config/opencode/agent/
 ### Tab Key Not Switching Between Agents
 
 - Only works for `mode: primary` agents (backend & frontend)
-- `mode: subagent` (prof-educate-me) must use `@mention`
+- `mode: subagent` agents like `prof_borg`, `code-reviewer-borg`, and `mother` must use `@mention`
 - Check your keybind configuration
 - Make sure both primary agents are installed
 
@@ -550,6 +722,7 @@ permission:
 ### Agent Using Wrong Technology
 
 The agents will follow your project's `AGENTS.md` context file. Make sure it specifies:
+
 - Which framework to use (Spring Boot vs .NET Core)
 - Which frontend framework (Angular vs Next.js vs Vue.js)
 - Architectural patterns to follow
@@ -559,8 +732,13 @@ The agents will follow your project's `AGENTS.md` context file. Make sure it spe
 **Override global agents with project-specific versions:**
 
 1. Copy the global agent to your project:
+
 ```bash
-cp ~/.config/opencode/agent/backend-systems-architect.md .opencode/agent/
+cp ~/.config/opencode/agent/senior_backend_borg.md .opencode/agent/
+# Example for the reviewer subagent:
+# cp ~/.config/opencode/agent/code-reviewer-borg.md .opencode/agent/
+# Example for the strategy subagent:
+# cp ~/.config/opencode/agent/mother.md .opencode/agent/
 ```
 
 2. Edit the project version with project-specific instructions
@@ -581,15 +759,19 @@ cp ~/.config/opencode/agent/backend-systems-architect.md .opencode/agent/
 ## 🎓 Pro Tips
 
 ### 1. Use Agents in Combination
+
 ```bash
-# Learn → Design → Implement workflow
-@prof-educate-me explain CQRS pattern
-@backend-systems-architect design CQRS for order service
-@senior-frontend-dev create command and query components
+# Learn → Decide → Implement workflow
+@prof_borg explain CQRS pattern
+@mother compare CQRS vs a simpler CRUD service for our order domain
+@senior_backend_borg design CQRS for order service
+@senior_frontend_borg create command and query components
 ```
 
 ### 2. Create Project Rules
+
 Add `AGENTS.md` to your project root with:
+
 - Tech stack and architecture overview
 - Coding standards and conventions
 - Security requirements
@@ -597,41 +779,49 @@ Add `AGENTS.md` to your project root with:
 - Deployment procedures
 
 ### 3. Customize Per Project
+
 Override global agents with project-specific versions:
+
 - Global: General full-stack capabilities
 - Project: Specific to your stack and patterns
 
 ### 4. Use Descriptive @ Mentions
+
 ```bash
 # Vague
-@prof-educate-me explain SAGA
+@prof_borg explain SAGA
 
 # Better - provides context
-@prof-educate-me explain SAGA pattern in context of order processing with payment failure handling
+@prof_borg explain SAGA pattern in context of order processing with payment failure handling
 ```
 
 ### 5. Leverage Both Primary Agents
+
 ```bash
 # Backend first
-@backend-systems-architect create user API
+@senior_backend_borg create user API
 
 # Then frontend
-@senior-frontend-dev create user management UI using the API from backend agent
+@senior_frontend_borg create user management UI using the API from backend agent
 ```
 
 ### 6. Iterate on Agent Instructions
+
 These agents are living documents:
+
 - Add technologies as you adopt them
 - Refine instructions based on what works
 - Share improvements with your team
 - Version control in `.opencode/agent/`
 
 ### 7. Use Subagent for Quick Learning
+
 Don't switch away from your primary agent:
+
 ```bash
 # While working with backend agent
 You: "Implementing distributed cache..."
-You: "@prof-educate-me quick: consistent hashing vs simple hash"
+You: "@prof_borg quick: consistent hashing vs simple hash"
 Prof: [Brief explanation]
 You: "Thanks! Using consistent hashing then..."
 ```
@@ -640,37 +830,51 @@ You: "Thanks! Using consistent hashing then..."
 
 ## 📊 Quick Reference Card
 
-```
+```text
 ┌────────────────────────────────────────────────────────────────┐
 │  OPENCODE AGENTS QUICK REFERENCE                               │
 ├────────────────────────────────────────────────────────────────┤
 │                                                                │
-│  backend-systems-architect (Primary)                          │
+│  senior_backend_borg (Primary)                               │
 │  • Tab to switch or @mention                                   │
 │  • Distributed systems, microservices, APIs                    │
 │  • .NET Core, Spring Boot, Kubernetes                          │
 │  • Database optimization, SAGA, CQRS                           │
 │  • Security: JWT, OAuth 2.0, OWASP                            │
-│  • Auto-approves: mvn, gradle, dotnet, docker, kubectl read   │
+│  • Default perms: asks before running most commands           │
 │                                                                │
-│  senior-frontend-dev (Primary)                                │
+│  senior_frontend_borg (Primary)                               │
 │  • Tab to switch or @mention                                   │
 │  • Angular, Next.js, Vue.js                                    │
 │  • TypeScript, Tailwind, component libraries                   │
 │  • Responsive design, accessibility                            │
-│  • Auto-approves: npm, yarn, pnpm, bun                        │
+│  • Allows safe git; asks for package commands                 │
 │                                                                │
-│  prof-educate-me (Subagent)                                   │
-│  • @prof-educate-me [question]                                │
+│  prof_borg (Subagent)                                          │
+│  • @prof_borg [question]                                       │
 │  • Explains concepts and patterns                             │
 │  • No code changes (read-only)                                │
 │  • 80/20 teaching: essential knowledge, maximum value         │
 │                                                                │
+│  code-reviewer-borg (Subagent)                               │
+│  • @code-reviewer-borg [review request]                      │
+│  • Reviews diffs for correctness and risk                    │
+│  • Calls out missing regression tests                        │
+│  • No code changes (read-only)                               │
+│                                                                │
+│  mother (Subagent)                                           │
+│  • @mother [advisory request]                                │
+│  • Recommends one path for risky problems                    │
+│  • Great for architecture and hard debugging                 │
+│  • No code changes (read-only)                               │
+│                                                                │
 │  WORKFLOW TIPS:                                               │
-│  1. Learn with prof-educate-me                                │
-│  2. Design with backend-systems-architect                     │
-│  3. Build UI with senior-frontend-dev                         │
-│  4. Iterate and refine                                        │
+│  1. Learn with prof_borg                                      │
+│  2. Decide with mother                                        │
+│  3. Design with senior_backend_borg                           │
+│  4. Build UI with senior_frontend_borg                        │
+│  5. Review with code-reviewer-borg                            │
+│  6. Iterate and refine                                        │
 │                                                                │
 └────────────────────────────────────────────────────────────────┘
 ```
@@ -680,34 +884,58 @@ You: "Thanks! Using consistent hashing then..."
 ## 🎯 Common Use Cases
 
 ### Microservices Development
+
 - **Backend**: Design services, implement APIs, add Kubernetes manifests
 - **Prof**: Explain service mesh, SAGA patterns, circuit breakers
 - **Frontend**: Build admin UI to manage services
 
 ### API-First Development
+
 - **Backend**: Create OpenAPI spec, implement endpoints with tests
 - **Prof**: Explain REST vs GraphQL vs gRPC trade-offs
 - **Frontend**: Generate API client, build UI consuming APIs
 
 ### Database Optimization
+
 - **Backend**: Add indexes, optimize queries, implement caching
 - **Prof**: Explain indexing strategies, query optimization, CAP theorem
 - **Frontend**: Implement infinite scroll, optimize data fetching
 
 ### Security Implementation
+
 - **Backend**: Implement JWT auth, RBAC, rate limiting, OWASP compliance
 - **Prof**: Explain OAuth 2.0 flows, zero-trust architecture
 - **Frontend**: Implement auth UI, secure token storage, CSRF protection
 
 ### Performance Tuning
+
 - **Backend**: Add caching, optimize database, implement async processing
 - **Prof**: Explain distributed caching, eventual consistency
 - **Frontend**: Code splitting, lazy loading, memoization
 
 ### CI/CD Pipeline Setup
+
 - **Backend**: Create Dockerfiles, K8s manifests, migration scripts
 - **Prof**: Explain blue-green deployments, canary releases
 - **Frontend**: Build optimization, asset compression, CDN integration
+
+### Code Review Before Merge
+
+- **Reviewer**: Review diffs for correctness, regression risk, and maintainability
+- **Backend/Frontend**: Apply only the smallest necessary fixes
+- **Prof**: Explain any architectural trade-offs the review surfaces
+
+### Architecture Decision Support
+
+- **Mother**: Compare options and recommend the simplest viable path
+- **Backend/Frontend**: Implement the chosen path incrementally
+- **Reviewer**: Sanity-check the final diff before merge
+
+### Complex Debugging
+
+- **Mother**: Analyze the failure mode and recommend the smallest safe path forward
+- **Backend/Frontend**: Implement the fix with a reproducing test first
+- **Reviewer**: Check regression risk and test strength before merge
 
 ---
 
@@ -716,7 +944,9 @@ You: "Thanks! Using consistent hashing then..."
 - [ ] Install agents (project-specific OR global)
 - [ ] Create `AGENTS.md` in project root with context
 - [ ] Test switching between primary agents with Tab
-- [ ] Test invoking subagent with `@prof-educate-me`
+- [ ] Test invoking subagent with `@prof_borg`
+- [ ] Test invoking subagent with `@code-reviewer-borg`
+- [ ] Test invoking subagent with `@mother`
 - [ ] Customize permissions based on your workflow
 - [ ] Add project-specific rules and conventions
 - [ ] Share with team (commit `.opencode/` to version control)
@@ -726,4 +956,4 @@ You: "Thanks! Using consistent hashing then..."
 
 **You now have a complete AI-powered development environment!** 🎉
 
-Use the backend agent for services and APIs, the frontend agent for UI, and the prof agent to learn concepts along the way. Happy coding!
+Use `senior_backend_borg` for services and APIs, `senior_frontend_borg` for UI, `prof_borg` to learn concepts, `mother` for deeper technical judgment, and `code-reviewer-borg` to sharpen changes before merge. Happy coding!
