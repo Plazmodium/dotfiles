@@ -1,6 +1,6 @@
 # OpenCode Agents Setup Guide
 
-This guide covers the installation and usage of five complementary agents for full-stack software development.
+This guide covers the installation and usage of seven complementary agents for full-stack software development.
 
 ## 📦 Available Agents
 
@@ -67,6 +67,31 @@ Principal engineering advisor and mother to the borgs for deeper analysis before
 - Pre-implementation strategy on risky or expensive changes
 - Getting one grounded recommendation before the builder agents proceed
 
+### 6. **scv** (Subagent)
+
+Bounded implementation worker for tightly scoped coding tasks. SCV stands for Space Construction Vehicle.
+
+**Use for:**
+
+- Parallel work slices with explicit file boundaries
+- Focused bug fixes with reproducing tests
+- Small constrained refactors inside a narrow module
+- Executing a parent agent's task packet with clear verification
+- Returning concise implementation handoff notes
+
+### 7. **scv_mcp** (Subagent)
+
+Bounded MCP implementation worker for tightly scoped Model Context Protocol tasks.
+
+**Use for:**
+
+- Adding or refining a single MCP tool, resource, or prompt
+- Focused MCP server, app, extension, or packaging slices
+- MCP-specific bug fixes with protocol-aware verification
+- Narrow MCP config, transport, or integration fixes
+- Returning concise MCP implementation handoff notes
+- Preparing MCP packaging and registry metadata, but not publishing or releasing
+
 ---
 
 ## 🚀 Installation
@@ -83,10 +108,12 @@ cp senior_frontend_borg.md .opencode/agent/
 cp prof_borg.md .opencode/agent/
 cp code-reviewer-borg.md .opencode/agent/
 cp mother.md .opencode/agent/
+cp scv.md .opencode/agent/
+cp scv_mcp.md .opencode/agent/
 
 # Commit to version control so team members get them
 git add .opencode/
-git commit -m "Add OpenCode agents for backend, frontend, education, review, and strategy"
+git commit -m "Add OpenCode agents for backend, frontend, education, review, strategy, and execution workers"
 ```
 
 **Benefit**: Entire team uses consistent agents and workflows.
@@ -103,6 +130,8 @@ cp senior_frontend_borg.md ~/.config/opencode/agent/
 cp prof_borg.md ~/.config/opencode/agent/
 cp code-reviewer-borg.md ~/.config/opencode/agent/
 cp mother.md ~/.config/opencode/agent/
+cp scv.md ~/.config/opencode/agent/
+cp scv_mcp.md ~/.config/opencode/agent/
 ```
 
 **Benefit**: Available across all your projects.
@@ -116,11 +145,13 @@ You can mix and match - install some globally and some per-project:
 cp senior_backend_borg.md ~/.config/opencode/agent/
 cp senior_frontend_borg.md ~/.config/opencode/agent/
 
-# Education, review, and strategy subagents per-project (team-specific context)
+# Education, review, strategy, and execution subagents per-project (team-specific context)
 mkdir -p .opencode/agent
 cp prof_borg.md .opencode/agent/
 cp code-reviewer-borg.md .opencode/agent/
 cp mother.md .opencode/agent/
+cp scv.md .opencode/agent/
+cp scv_mcp.md .opencode/agent/
 ```
 
 ---
@@ -203,6 +234,124 @@ cp mother.md .opencode/agent/
 - Recommends one primary path with explicit trade-offs and effort signals
 - Favors minimal, maintainable, low-risk changes
 - Stays read-only and does not modify files
+
+### SCV (Subagent)
+
+**Invoke with @ mention:**
+
+```text
+@scv implement this bounded task packet with the given allowed files and verification
+@scv add the reproducing test and smallest safe fix inside these two files
+@scv execute this narrow refactor and return a concise handoff report
+```
+
+**What it does:**
+
+- Executes tightly scoped implementation packets
+- Is instructed to stay inside explicit file boundaries from the task packet
+- Starts bug fixes with a reproducing test
+- Returns a concise implementation handoff with verification
+
+**Important:** SCV boundaries are prompt-enforced, not runtime-sandboxed. Keep `allowed_files` tight, keep `verification_required` explicit, and expect SCV to return a blocker if the packet is underspecified or the verification command is not permitted.
+
+**Canonical packet shape:**
+
+```text
+SCV task packet
+
+skills_to_apply:
+- Type-safe TypeScript only
+- Bug fixes start with a reproducing test
+- Reuse existing error-handling patterns
+
+task_context:
+- Goal: prevent duplicate retry scheduling
+- Current behavior: retry jobs can be enqueued twice on timeout + reconnect
+- Desired behavior: at most one retry job per message id
+- Relevant files: src/queue/retry.ts, src/queue/retry.test.ts
+- Important local context: keep current logging shape
+
+required_output:
+- add a reproducing regression test
+- implement the smallest safe fix
+- keep public API unchanged
+
+allowed_files:
+- src/queue/retry.ts
+- src/queue/retry.test.ts
+
+verification_required:
+- run the targeted retry test
+
+constraints:
+- no new dependencies
+
+non_goals:
+- do not refactor queue architecture
+```
+
+### SCV MCP (Subagent)
+
+**Invoke with @ mention:**
+
+```text
+@scv_mcp implement this bounded MCP task packet
+@scv_mcp add the MCP tool and protocol-aware verification inside these files
+@scv_mcp execute this narrow MCP App wiring change and return a concise handoff report
+```
+
+**What it does:**
+
+- Executes tightly scoped MCP implementation packets
+- Requires host, transport, and MCP surface context when runtime MCP behavior changes
+- Starts MCP bug fixes with a reproducing test or protocol check
+- Returns a concise handoff with protocol-aware verification
+
+**Important:** SCV MCP boundaries are prompt-enforced, not runtime-sandboxed. Keep `allowed_files` tight, specify host and transport explicitly when runtime MCP behavior changes, and expect SCV MCP to return a blocker if MCP protocol context, verified docs, or the required verification command is missing. SCV MCP prepares code and metadata only; it does not publish, deploy, or release.
+
+**Canonical packet shape:**
+
+```text
+SCV MCP task packet
+
+skills_to_apply:
+- Use current official MCP docs and official SDK behavior
+- Model exposed behavior explicitly as tools/resources/prompts
+- Never log to stdout for stdio servers
+
+task_context:
+- Goal: add an order lookup tool
+- Current behavior: server exposes no order lookup capability
+- Desired behavior: host can fetch order details by id
+- Relevant files: src/server.ts, src/tools/orders.ts, tests/orders-tool.test.ts
+- Target host(s): Claude Desktop
+- Transport expectation: stdio
+- Intended MCP surface: tools
+- Important local context: keep the existing SDK wiring pattern
+
+required_output:
+- implement the tool
+- add a targeted regression or protocol test
+- keep transport and auth unchanged
+
+allowed_files:
+- src/server.ts
+- src/tools/orders.ts
+- tests/orders-tool.test.ts
+
+verification_required:
+- run the targeted tool test
+
+docs_verified:
+- MCP docs: tools concept and stdio guidance verified
+
+constraints:
+- no new dependencies
+
+non_goals:
+- do not add resources or prompts
+- do not redesign server architecture
+```
 
 ---
 
@@ -318,6 +467,38 @@ Reviewer: [Checks for missing edge cases, race conditions, and weak test coverag
 # Clarify the underlying pattern
 You: "@prof_borg explain idempotency keys and why they matter in retry-heavy distributed systems"
 Prof: [Explains how they prevent duplicate side effects and where they can still fail]
+```
+
+### Example 8: Parallel SCV Work Slice
+
+```bash
+# Plan the safest decomposition first
+You: "@mother split this feature into the smallest safe implementation slices"
+Mother: [Recommends two disjoint file-bounded work packets]
+
+# Execute one slice with SCV
+You: "@scv SCV task packet\n\nskills_to_apply:\n- Type-safe TS only\n- Reuse existing parser patterns\n\ntask_context:\n- Goal: add parser validation\n- Current behavior: malformed input reaches downstream logic\n- Desired behavior: parser rejects malformed input early\n- Relevant files: src/parser.ts, tests/parser.test.ts\n- Important local context: preserve current public API\n\nrequired_output:\n- implement parser validation\n- add or update tests\n\nallowed_files:\n- src/parser.ts\n- tests/parser.test.ts\n\nverification_required:\n- run the parser test\n\nconstraints:\n- no new dependencies\n\nnon_goals:\n- do not refactor parser architecture"
+SCV: [Implements only the bounded slice and returns files changed plus verification]
+
+# Review the merged result
+You: "@code-reviewer-borg review the combined change for correctness and regression risk"
+Reviewer: [Checks the final integrated diff]
+```
+
+### Example 9: MCP SCV Slice
+
+```bash
+# Plan the MCP slice first
+You: "@mother identify the smallest safe MCP implementation slice for adding a read-only order lookup capability"
+Mother: [Recommends a bounded tool-only change with explicit verification]
+
+# Execute the MCP slice
+You: "@scv_mcp SCV MCP task packet\n\nskills_to_apply:\n- Use current official MCP docs and official SDK behavior\n- Model exposed behavior explicitly as tools/resources/prompts\n- Never log to stdout for stdio servers\n\ntask_context:\n- Goal: add an order lookup tool\n- Current behavior: server exposes no order lookup capability\n- Desired behavior: host can fetch order details by id\n- Relevant files: src/server.ts, src/tools/orders.ts, tests/orders-tool.test.ts\n- Target host(s): Claude Desktop\n- Transport expectation: stdio\n- Intended MCP surface: tools\n- Important local context: keep the existing SDK wiring pattern\n\nrequired_output:\n- implement the tool\n- add a targeted test\n- keep transport and auth unchanged\n\nallowed_files:\n- src/server.ts\n- src/tools/orders.ts\n- tests/orders-tool.test.ts\n\nverification_required:\n- run the targeted tool test\n\ndocs_verified:\n- MCP docs: tools concept and stdio guidance verified\n\nconstraints:\n- no new dependencies\n\nnon_goals:\n- do not add resources or prompts\n- do not redesign server architecture"
+SCV MCP: [Implements the bounded MCP slice and returns files changed plus protocol-aware verification]
+
+# Review the integrated result
+You: "@code-reviewer-borg review this MCP change for correctness and regression risk"
+Reviewer: [Checks the final diff and test coverage]
 ```
 
 ---
@@ -452,6 +633,100 @@ tools:
 - Refactor planning in minimal increments
 - Pre-implementation risk analysis
 - One high-confidence recommendation with guardrails
+
+### scv
+
+```yaml
+mode: subagent
+model: openai/gpt-5.3-codex
+temperature: 0.1
+tools:
+  write: true
+  edit: true
+  bash: true
+permission:
+  edit: allow
+  bash:
+    "git reset --hard*": deny
+    "git checkout --*": deny
+    "git clean*": deny
+    "rm -rf*": deny
+    "git push*": deny
+    "npm publish*": deny
+    "pnpm publish*": deny
+    "yarn npm publish*": deny
+    "bun publish*": deny
+    "gh release*": deny
+    "git status": allow
+    "git diff": allow
+    "git log*": allow
+    "npm *": ask
+    "pnpm *": ask
+    "yarn *": ask
+    "bun *": ask
+    "cargo *": ask
+    "python *": ask
+    "uv *": ask
+    "pytest *": ask
+    "*": ask
+```
+
+**Specializes in:**
+
+- Bounded implementation packets
+- Parallelizable file-scoped work
+- Regression-test-first bug fixes
+- Minimal changes with explicit verification
+- Concise handoff output for parent agents
+
+### scv_mcp
+
+```yaml
+mode: subagent
+model: openai/gpt-5.3-codex
+temperature: 0.1
+tools:
+  write: true
+  edit: true
+  bash: true
+permission:
+  edit: allow
+  bash:
+    "git reset --hard*": deny
+    "git checkout --*": deny
+    "git clean*": deny
+    "rm -rf*": deny
+    "git push*": deny
+    "npm publish*": deny
+    "pnpm publish*": deny
+    "yarn npm publish*": deny
+    "bun publish*": deny
+    "gh release*": deny
+    "git status": allow
+    "git diff": allow
+    "git log*": allow
+    "npx @modelcontextprotocol/inspector *": allow
+    "npm *": ask
+    "pnpm *": ask
+    "yarn *": ask
+    "bun *": ask
+    "node *": ask
+    "uv *": ask
+    "python *": ask
+    "pip *": ask
+    "cargo *": ask
+    "dotnet *": ask
+    "*": ask
+```
+
+**Specializes in:**
+
+- Bounded MCP implementation packets
+- Focused MCP server, app, extension, and packaging slices
+- Protocol-aware verification with MCP-specific guardrails
+- Minimal surface changes with explicit host and transport context
+- Concise handoff output for parent agents
+- No publish/deploy/release actions
 
 ---
 
@@ -651,7 +926,7 @@ NEXT_PUBLIC_STRIPE_KEY=pk_...
 - **Health Checks**: Liveness and readiness probes mandatory
 ```
 
-All five agents will automatically read and follow these project-specific rules.
+All seven agents will automatically read and follow these project-specific rules.
 
 ---
 
@@ -668,12 +943,14 @@ ls .opencode/agent/
 # Global
 ls ~/.config/opencode/agent/
 
-# Should see all five agents
+# Should see all seven agents
 # senior_backend_borg.md
 # senior_frontend_borg.md
 # prof_borg.md
 # code-reviewer-borg.md
 # mother.md
+# scv.md
+# scv_mcp.md
 ```
 
 **Verify YAML frontmatter:**
@@ -692,7 +969,7 @@ ls ~/.config/opencode/agent/
 ### Tab Key Not Switching Between Agents
 
 - Only works for `mode: primary` agents (backend & frontend)
-- `mode: subagent` agents like `prof_borg`, `code-reviewer-borg`, and `mother` must use `@mention`
+- `mode: subagent` agents like `prof_borg`, `code-reviewer-borg`, `mother`, `scv`, and `scv_mcp` must use `@mention`
 - Check your keybind configuration
 - Make sure both primary agents are installed
 
@@ -739,6 +1016,10 @@ cp ~/.config/opencode/agent/senior_backend_borg.md .opencode/agent/
 # cp ~/.config/opencode/agent/code-reviewer-borg.md .opencode/agent/
 # Example for the strategy subagent:
 # cp ~/.config/opencode/agent/mother.md .opencode/agent/
+# Example for the execution subagent:
+# cp ~/.config/opencode/agent/scv.md .opencode/agent/
+# Example for the MCP execution subagent:
+# cp ~/.config/opencode/agent/scv_mcp.md .opencode/agent/
 ```
 
 2. Edit the project version with project-specific instructions
@@ -868,13 +1149,27 @@ You: "Thanks! Using consistent hashing then..."
 │  • Great for architecture and hard debugging                 │
 │  • No code changes (read-only)                               │
 │                                                                │
+│  scv (Subagent)                                              │
+│  • @scv [bounded task packet]                                │
+│  • Executes tightly scoped implementation work               │
+│  • Follows allowed file boundaries from the task packet      │
+│  • Returns concise handoff plus verification                 │
+│                                                                │
+│  scv_mcp (Subagent)                                          │
+│  • @scv_mcp [bounded MCP packet]                             │
+│  • Executes focused MCP implementation work                  │
+│  • Requires MCP runtime context when behavior changes        │
+│  • Returns protocol-aware handoff plus verification          │
+│                                                                │
 │  WORKFLOW TIPS:                                               │
 │  1. Learn with prof_borg                                      │
 │  2. Decide with mother                                        │
 │  3. Design with senior_backend_borg                           │
-│  4. Build UI with senior_frontend_borg                        │
-│  5. Review with code-reviewer-borg                            │
-│  6. Iterate and refine                                        │
+│  4. Execute bounded slices with scv                           │
+│  5. Use scv_mcp for narrow MCP implementation slices          │
+│  6. Build UI with senior_frontend_borg                        │
+│  7. Review with code-reviewer-borg                            │
+│  8. Iterate and refine                                        │
 │                                                                │
 └────────────────────────────────────────────────────────────────┘
 ```
@@ -937,6 +1232,18 @@ You: "Thanks! Using consistent hashing then..."
 - **Backend/Frontend**: Implement the fix with a reproducing test first
 - **Reviewer**: Check regression risk and test strength before merge
 
+### Parallel Implementation Slices
+
+- **Mother**: Define the smallest safe decomposition
+- **SCV**: Execute disjoint task packets with explicit allowed files
+- **Reviewer**: Review the integrated result after merge
+
+### MCP Implementation Slices
+
+- **Mother**: Define the smallest safe MCP slice with explicit host and transport assumptions
+- **SCV MCP**: Execute bounded MCP task packets with protocol-aware verification
+- **Reviewer**: Review the integrated MCP diff for correctness and regression risk
+
 ---
 
 ## 🚀 Getting Started Checklist
@@ -947,6 +1254,8 @@ You: "Thanks! Using consistent hashing then..."
 - [ ] Test invoking subagent with `@prof_borg`
 - [ ] Test invoking subagent with `@code-reviewer-borg`
 - [ ] Test invoking subagent with `@mother`
+- [ ] Test invoking subagent with `@scv`
+- [ ] Test invoking subagent with `@scv_mcp`
 - [ ] Customize permissions based on your workflow
 - [ ] Add project-specific rules and conventions
 - [ ] Share with team (commit `.opencode/` to version control)
@@ -956,4 +1265,4 @@ You: "Thanks! Using consistent hashing then..."
 
 **You now have a complete AI-powered development environment!** 🎉
 
-Use `senior_backend_borg` for services and APIs, `senior_frontend_borg` for UI, `prof_borg` to learn concepts, `mother` for deeper technical judgment, and `code-reviewer-borg` to sharpen changes before merge. Happy coding!
+Use `senior_backend_borg` for services and APIs, `senior_frontend_borg` for UI, `prof_borg` to learn concepts, `mother` for deeper technical judgment, `scv` for bounded execution work, `scv_mcp` for narrow MCP implementation slices, and `code-reviewer-borg` to sharpen changes before merge. Happy coding!

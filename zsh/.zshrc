@@ -19,4 +19,5 @@ compinit
 # Begin ALIASES
 alias bua='brew update && brew upgrade && brew upgrade --cask && brew cleanup'
 alias oc='opencode'
+alias lz='lazygit'
 # End ALIASES
