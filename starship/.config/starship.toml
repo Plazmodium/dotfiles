@@ -9,7 +9,7 @@
 # GLOBAL SETTINGS
 # ═══════════════════════════════════════════════════════════════
 add_newline = true
-command_timeout = 2000
+command_timeout = 3000
 scan_timeout = 50
 # Use the Starfield color palette
 palette = "starfield"

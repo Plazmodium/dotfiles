@@ -1,7 +1,7 @@
 ---
 description: Bounded implementation worker for tightly scoped coding tasks. Best for parallel work slices with explicit file boundaries, constraints, and verification.
 mode: subagent
-model: openai/gpt-5.3-codex
+model: openai/gpt-5.4
 temperature: 0.1
 tools:
   write: true

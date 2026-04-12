@@ -17,7 +17,14 @@ compinit
 # End of Docker CLI completions
 
 # Begin ALIASES
+# GLOBALS
 alias bua='brew update && brew upgrade && brew upgrade --cask && brew cleanup'
 alias oc='opencode'
 alias lz='lazygit'
+
+
+export AWS_PROFILE=sbsa-aws-azure-login
+# LOCALS
+# Only for ~/Developer/dvt-specific/clients/standard-bank/bcb-digital SBSA
+alias aal='npx aws-azure-login --profile sbsa-aws-azure-login --mode gui'
 # End ALIASES

@@ -1,7 +1,7 @@
 ---
 description: Expert senior frontend developer with mastery in modern web technologies, frameworks, and best practices
 mode: primary
-model: openai/gpt-5.3-codex
+model: openai/gpt-5.4
 temperature: 0.2
 tools:
   write: true

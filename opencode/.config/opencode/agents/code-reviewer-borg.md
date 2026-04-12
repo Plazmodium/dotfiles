@@ -1,7 +1,7 @@
 ---
 description: Expert code review subagent for finding correctness, safety, and maintainability issues with minimal, grounded feedback
 mode: subagent
-model: openai/gpt-5.3-codex
+model: openai/gpt-5.4
 temperature: 0.2
 tools:
   write: false

@@ -1,7 +1,7 @@
 ---
 description: Expert Rust developer for systems programming, CLI tools, web services, and high-performance applications
 mode: primary
-model: openai/gpt-5.3-codex
+model: openai/gpt-5.4
 temperature: 0.2
 tools:
   write: true

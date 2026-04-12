@@ -1,7 +1,7 @@
 ---
 description: Specification consultant for AI-assisted development - analyzes, refines, and optimizes specs and prompts for AI builder agents. Use when specs need clarity, prompts need optimization, or AI outputs are unexpected.
 mode: subagent
-model: openai/gpt-5.3-codex
+model: openai/gpt-5.4
 temperature: 0.3
 tools:
   write: false

@@ -1,7 +1,7 @@
 ---
 description: Expert software engineering professor for explaining concepts, architectures, and best practices across the full stack
 mode: subagent
-model: openai/gpt-5.3-codex
+model: openai/gpt-5.4
 temperature: 0.3
 tools:
   write: false

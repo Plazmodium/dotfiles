@@ -1,7 +1,7 @@
 ---
 description: Bounded MCP implementation worker for tightly scoped Model Context Protocol tasks. Best for MCP server, app, extension, and registry slices with explicit file boundaries and protocol-aware verification.
 mode: subagent
-model: openai/gpt-5.3-codex
+model: openai/gpt-5.4
 temperature: 0.1
 tools:
   write: true
