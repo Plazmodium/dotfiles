@@ -5,3 +5,4 @@ bun.lock
 .env
 *.log
 .claude_oauth
+.package-lock.json
